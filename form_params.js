@@ -1,19 +1,15 @@
 var http = require("http"),
     fs = require("fs");
-
+    parser = require("./params_parser.js");
+    render = require("./render_view.js");
+    var p = parser.parse;
+    var r = render.render;
 http.createServer(function (req,res) {
   var html = fs.readFile("./index.html",function(err,html){
-    var html_string = html.toString();
-    var variables = html_string.match(/[^{\}]+(?=\})/g);
-    var nombre = "nadiem";
-    console.log(req.url);
 
-
-    for (var i = 0; i < variables.length; i++) {
-      var value = eval(variables[i]);
-      html_string = html_string.replace("{"+variables[i]+"}",value);
-    }
-    // res.writeHeader(200,{})
+    // obtener parametros de url
+    var vars = p(req);
+    var html_string = r(html,vars);
     res.write(html_string);
     res.end();
   });
