@@ -2,7 +2,7 @@ var http = require("http"),
     fs = require("fs");
     parser = require("./params_parser.js");
     render = require("./render_view.js");
-    var p = parser.parse;
+    var p = parser.parseModule;
     var r = render.render;
 http.createServer(function (req,res) {
   var html = fs.readFile("./index.html",function(err,html){
